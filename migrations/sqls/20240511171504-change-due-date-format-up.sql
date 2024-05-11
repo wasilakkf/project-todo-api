@@ -1,0 +1,1 @@
+ALTER TABLE task MODIFY due_date DATETIME;

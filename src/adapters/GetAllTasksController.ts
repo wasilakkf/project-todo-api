@@ -15,8 +15,6 @@ export class GetAllTasksController implements ControllerInterface<GetAllTasksCon
 
     const tasks = await getTasksUseCase.execute();
 
-    console.log({ tasks });
-
     return {
       status: 200,
       body: { tasks },

@@ -1,9 +1,9 @@
 export type TaskId = string;
 
 export enum TaskPriority {
-  HIGH = 0,
-  NORMAL = 1,
-  LOW = 2,
+  HIGH = 1,
+  NORMAL = 2,
+  LOW = 3,
 }
 
 export interface Task {

@@ -10,7 +10,7 @@ export class ExpressServer {
 
     this.app.use(express.json());
 
-    this.app.use('/tasks', tasksRouter);
+    this.app.use(tasksRouter);
   }
 
   listen(port: number) {

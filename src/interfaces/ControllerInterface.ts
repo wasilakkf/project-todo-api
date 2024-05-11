@@ -1,10 +1,12 @@
-export interface ControllerRequest {}
+export interface ControllerRequest {
+  body: Record<string, unknown>;
+}
 
-export interface ControllerResponse<T = unknown> {
+export interface ControllerResponse<T> {
   status: number;
   body: T;
 }
 
-export interface ControllerInterface<T = unknown> {
-  handle(request: ControllerRequest): Promise<ControllerResponse<T>>;
+export interface ControllerInterface<ResponseBody = Record<string, unknown>> {
+  handle(request: ControllerRequest): Promise<ControllerResponse<ResponseBody>>;
 }
