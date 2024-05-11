@@ -35,6 +35,7 @@
   "dependencies": {
     "db-migrate": "^0.11.14",
     "db-migrate-mysql": "^2.3.2",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mysql2": "^3.9.7"
   }
 }
