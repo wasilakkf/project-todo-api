@@ -1,11 +1,11 @@
 import { Task } from '../../domain/entities/Task.js';
 import { AddTaskDto } from '../dtos/AddTaskDto.js';
-import { DeleteTaskDto } from '../dtos/DeleteTaskDto.js';
-import { GetTaskDto } from '../dtos/GetTaskDto.js';
+import { UpdateTaskDto } from '../dtos/UpdateTaskDto.js';
 
 export interface TasksRepositoryInterface {
   getAll(): Promise<ReadonlyArray<Task>>;
-  getTask(dto: GetTaskDto): Promise<Task | null>;
+  getTask(taskId: string): Promise<Task | null>;
   addTask(dto: AddTaskDto): Promise<void>;
-  deleteTask(dto: DeleteTaskDto): Promise<void>;
+  updateTask(dto: UpdateTaskDto): Promise<void>;
+  deleteTask(taskId: string): Promise<void>;
 }

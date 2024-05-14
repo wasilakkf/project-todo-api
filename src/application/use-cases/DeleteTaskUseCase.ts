@@ -1,11 +1,10 @@
 import { UseCaseInterface } from '../../interfaces/UseCaseInterface.js';
-import { DeleteTaskDto } from '../dtos/DeleteTaskDto.js';
 import { TasksRepositoryInterface } from '../repositories/TasksRepositoryInterface.js';
 
-export class DeleteTaskUseCase implements UseCaseInterface<DeleteTaskDto> {
+export class DeleteTaskUseCase implements UseCaseInterface<string> {
   constructor(private tasksRepository: TasksRepositoryInterface) {}
 
-  execute(dto: DeleteTaskDto) {
-    return this.tasksRepository.deleteTask(dto);
+  execute(taskId: string) {
+    return this.tasksRepository.deleteTask(taskId);
   }
 }

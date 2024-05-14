@@ -22,7 +22,7 @@ export class DeleteTaskController implements ControllerInterface {
 
     const deleteTaskUseCase = new DeleteTaskUseCase(this.tasksRepository);
 
-    await deleteTaskUseCase.execute({ taskId: params.taskId });
+    await deleteTaskUseCase.execute(params.taskId);
 
     return { status: 200, body: {} };
   }

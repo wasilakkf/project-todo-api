@@ -22,7 +22,7 @@ export class GetTaskController implements ControllerInterface {
 
     const getTaskUseCase = new GetTaskUseCase(this.tasksRepository);
 
-    const task = await getTaskUseCase.execute({ taskId: params.taskId });
+    const task = await getTaskUseCase.execute(params.taskId);
 
     if (!task) {
       return { status: 404, body: {} };
