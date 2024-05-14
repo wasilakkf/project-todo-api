@@ -1,4 +1,5 @@
 export interface ControllerRequest {
+  params: Record<string, unknown>;
   body: Record<string, unknown>;
 }
 

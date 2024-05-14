@@ -3,21 +3,28 @@ import { TasksRepositoryInterface } from '../../application/repositories/TasksRe
 import { Task } from '../../domain/entities/Task.js';
 import { MySQL } from '../db/MySQL.js';
 import { isoDateToDatetime } from '../../utils/date.js';
+import { DeleteTaskDto } from '../../application/dtos/DeleteTaskDto.js';
 
 export class TasksRepository implements TasksRepositoryInterface {
-  async addTask({ title, description, dueDate, priority }: AddTaskDto) {
-    const mysql = MySQL.getInstance();
+  private mysql: MySQL;
 
-    await mysql.queryResult(
+  constructor() {
+    this.mysql = MySQL.getInstance();
+  }
+
+  async addTask({ title, description, dueDate, priority }: AddTaskDto) {
+    await this.mysql.queryResult(
       `INSERT INTO task (title, description, due_date, priority) VALUES (?, ?, ?, ?)`,
       [title, description, dueDate && isoDateToDatetime(dueDate), priority]
     );
   }
 
-  getAll() {
-    const mysql = MySQL.getInstance();
+  async deleteTask({ taskId }: DeleteTaskDto) {
+    await this.mysql.queryResult('DELETE FROM task WHERE task_id = ?', [taskId]);
+  }
 
-    return mysql.queryRows<Task>(`
+  getAll() {
+    return this.mysql.queryRows<Task>(`
       SELECT 
         task_id AS id,
         title,
