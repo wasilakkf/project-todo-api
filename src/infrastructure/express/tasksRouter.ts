@@ -3,6 +3,7 @@ import { Router, Request, Response } from 'express';
 import { GetAllTasksController } from '../../adapters/GetAllTasksController.js';
 import { AddTaskController } from '../../adapters/AddTaskController.js';
 import { DeleteTaskController } from '../../adapters/DeleteTaskController.js';
+import { GetTaskController } from '../../adapters/GetTaskController.js';
 import { TasksRepository } from '../repositories/TasksRepository.js';
 import { makeExpressHandler } from './makeExpressHandler.js';
 
@@ -10,10 +11,12 @@ const tasksRouter = Router();
 
 const tasksRepository = new TasksRepository();
 const getAllTasksController = new GetAllTasksController(tasksRepository);
+const getTaskController = new GetTaskController(tasksRepository);
 const addTaskController = new AddTaskController(tasksRepository);
 const deleteTaskController = new DeleteTaskController(tasksRepository);
 
 tasksRouter.get('/tasks', makeExpressHandler(getAllTasksController));
+tasksRouter.get('/tasks/:taskId', makeExpressHandler(getTaskController));
 tasksRouter.post('/tasks', makeExpressHandler(addTaskController));
 tasksRouter.delete('/tasks/:taskId', makeExpressHandler(deleteTaskController));
 

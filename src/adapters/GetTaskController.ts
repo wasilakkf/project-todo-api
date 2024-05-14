@@ -1,12 +1,12 @@
 import { TasksRepositoryInterface } from '../application/repositories/TasksRepositoryInterface.js';
-import { DeleteTaskUseCase } from '../application/use-cases/DeleteTaskUseCase.js';
+import { GetTaskUseCase } from '../application/use-cases/GetTaskUseCase.js';
 import { ControllerInterface, ControllerRequest } from '../interfaces/ControllerInterface.js';
 
 interface RequestParams {
   taskId: string;
 }
 
-export class DeleteTaskController implements ControllerInterface {
+export class GetTaskController implements ControllerInterface {
   constructor(private tasksRepository: TasksRepositoryInterface) {}
 
   private hasValidParams(params: Partial<RequestParams>): params is RequestParams {
@@ -20,10 +20,14 @@ export class DeleteTaskController implements ControllerInterface {
       return { status: 400, body: {} };
     }
 
-    const deleteTaskUseCase = new DeleteTaskUseCase(this.tasksRepository);
+    const getTaskUseCase = new GetTaskUseCase(this.tasksRepository);
 
-    await deleteTaskUseCase.execute({ taskId: params.taskId });
+    const task = await getTaskUseCase.execute({ taskId: params.taskId });
 
-    return { status: 200, body: {} };
+    if (!task) {
+      return { status: 404, body: {} };
+    }
+
+    return { status: 200, body: { task } };
   }
 }

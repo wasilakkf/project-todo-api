@@ -4,6 +4,7 @@ import { Task } from '../../domain/entities/Task.js';
 import { MySQL } from '../db/MySQL.js';
 import { isoDateToDatetime } from '../../utils/date.js';
 import { DeleteTaskDto } from '../../application/dtos/DeleteTaskDto.js';
+import { GetTaskDto } from '../../application/dtos/GetTaskDto.js';
 
 export class TasksRepository implements TasksRepositoryInterface {
   private mysql: MySQL;
@@ -23,6 +24,26 @@ export class TasksRepository implements TasksRepositoryInterface {
     await this.mysql.queryResult('DELETE FROM task WHERE task_id = ?', [taskId]);
   }
 
+  async getTask({ taskId }: GetTaskDto) {
+    const tasks = await this.mysql.queryRows<Task>(
+      `
+      SELECT
+        task_id AS id,
+        title,
+        description,
+        completed,
+        priority,
+        due_date AS dueDate,
+        project_id AS projectId,
+        created_at AS createdAt
+      FROM task WHERE task_id = ?
+    `,
+      [taskId]
+    );
+
+    return tasks[0] ?? null;
+  }
+
   getAll() {
     return this.mysql.queryRows<Task>(`
       SELECT 
@@ -34,6 +55,7 @@ export class TasksRepository implements TasksRepositoryInterface {
         due_date AS dueDate,
         project_id AS projectId,
         created_at AS createdAt
-      FROM task;`);
+      FROM task;
+    `);
   }
 }

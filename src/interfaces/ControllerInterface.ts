@@ -3,11 +3,11 @@ export interface ControllerRequest {
   body: Record<string, unknown>;
 }
 
-export interface ControllerResponse<T> {
+export interface ControllerResponse {
   status: number;
-  body: T;
+  body: Record<string, unknown>;
 }
 
-export interface ControllerInterface<ResponseBody = Record<string, unknown>> {
-  handle(request: ControllerRequest): Promise<ControllerResponse<ResponseBody>>;
+export interface ControllerInterface {
+  handle(request: ControllerRequest): Promise<ControllerResponse>;
 }

@@ -1,3 +1,3 @@
 export interface DeleteTaskDto {
-  taskId: number;
+  taskId: string;
 }
